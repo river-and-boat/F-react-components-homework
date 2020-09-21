@@ -12,6 +12,8 @@ class Chat extends Component {
     this.state = {
       shop: {},
       messages: [],
+      // eslint-disable-next-line react/no-unused-state
+      input: '',
     };
   }
 
@@ -27,13 +29,29 @@ class Chat extends Component {
     }, 1000);
   }
 
+  changeState = (message) => {
+    this.messages = this.state.messages.concat(message);
+    this.setState({
+      messages: this.messages,
+    });
+  };
+
+  changeInput = (input) => {
+    // eslint-disable-next-line react/no-unused-state
+    this.setState({ input });
+  };
+
   render() {
     const { shop, messages } = this.state;
     return (
       <main className="Chat">
         <ChatHeader shop={shop} />
         <ChatBox messages={messages} />
-        <ChatInput />
+        <ChatInput
+          onStateChanged={this.changeState}
+          answers={answersData}
+          onInputchanged={this.changeInput}
+        />
       </main>
     );
   }
